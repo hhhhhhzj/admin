@@ -1,25 +1,56 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import RoutesConfig from './config'
+import store from '../store/index.js'
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/Login.vue')
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/mainbox',
+    name:'mainbox',
+    component: () => import('@/views/MainBox.vue'),
+  },
+  {
+    path: '/',
+    redirect: '/login'
   }
+  //mianbox的嵌套路由，后面根据权限动态添加
 ]
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes
 })
+//路由守卫，没有登陆不能访问
+router.beforeEach((to, from, next) => {
+  if (to.name === 'login') {
+    next()
+  } else {
+    //如果授权（已经登陆过）next()
+    //如果没有授权（没有登陆过）跳转到登录页面
+    if (!localStorage.getItem('token')) {
+      next({ name: 'login' })
+    } else {
+      if (!store.state.isGetterRouter) {
+        ConfigRouter()
+        next()
+      } else {
+        next()
+      }
+    }
+  }
+})
+
+const ConfigRouter = () => {
+   RoutesConfig.forEach(item => {
+    router.addRoute('mainbox', item)
+   })
+
+   //改变isGetterRouter的状态
+   store.commit('changeGetterRouter', true)
+}
 
 export default router
