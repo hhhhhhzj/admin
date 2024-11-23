@@ -31,6 +31,15 @@ const routes = [
         path: '/news-manage/addnews',
         component: () => import('@/views/news-manage/NewsAdd.vue')
     },
+    {
+        path: '/',
+        redirect: '/index'   // 默认跳转到首页
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        name: 'Notfound',
+        component: () => import('@/views/notfound/NotFound.vue')
+    }
 ]
 
 export default routes
