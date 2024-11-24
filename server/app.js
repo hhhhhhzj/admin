@@ -6,6 +6,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+const UserRouter = require('./routes/admin/UserRouter')
 
 var app = express();
 
@@ -27,7 +28,7 @@ app.use('/users', usersRouter);
  /adminapi/* - 后台系统用的
  /webapi/* - 前台系统用的
 */
-
+app.use(UserRouter)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

@@ -78,8 +78,8 @@ const submitForm = () => {
             //2.拿到表单内容，提交后台
             console.log(loginForm);
             //3.设置token
-            localStorage.setItem('token', 'xxxxxx'); //设置token
-            axios.get("/users").then(res =>{
+            // localStorage.setItem('token', 'xxxxxx'); //设置token
+            axios.post("/adminapi/user/login",loginForm).then(res =>{
                 console.log(res.data);
             })
             //4.跳转到首页
