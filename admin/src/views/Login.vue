@@ -49,6 +49,7 @@
 <script setup>
 import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import axios from 'axios';
 const loginForm = reactive({
     username: '',
     password: ''
@@ -78,6 +79,9 @@ const submitForm = () => {
             console.log(loginForm);
             //3.设置token
             localStorage.setItem('token', 'xxxxxx'); //设置token
+            axios.get("/users").then(res =>{
+                console.log(res.data);
+            })
             //4.跳转到首页
             router.push('/index');
         }

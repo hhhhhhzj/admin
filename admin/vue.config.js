@@ -11,5 +11,15 @@ module.exports = defineConfig({
       })
       return definitions
     })
-  }
+  },
+
+  //反向代理
+  devServer: {
+    proxy: {
+      "/adminapi": {
+        target: "http://localhost:3000",
+        changeOrigin: true,
+      },
+    },
+  },
 })
