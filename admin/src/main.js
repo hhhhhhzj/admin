@@ -7,6 +7,8 @@ import 'element-plus/dist/index.css'
 import Particles from "@tsparticles/vue3";
 import { loadFull } from 'tsparticles'
 
+
+
 createApp(App)
     .use(store)
     .use(router)

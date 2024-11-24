@@ -7,7 +7,7 @@
             :default-active="route.currentRoute.value.path"
             >
             
-            <el-menu-item index="/home">
+            <el-menu-item index="/index">
                 <el-icon><HomeFilled /></el-icon>
                 <span>首页</span>
             </el-menu-item>
