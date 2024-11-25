@@ -84,9 +84,8 @@ const submitForm = () => {
                 console.log(res.data);
                 if(res.data.ActionType==='ok'){
                     router.push('/index');
-                    localStorage.setItem('token', 'hzj')
                 }else{
-                    ElMessage('用户名或密码错误')
+                    ElMessage.error('用户名或密码错误')
                 }
             })
             //4.跳转到首页
