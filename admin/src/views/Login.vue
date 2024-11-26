@@ -194,7 +194,7 @@ const options = {
     }
 }
 
-:deep(.el-form-item__label) {
+::v-deep(.el-form-item__label) {
     color: white;
 }
 </style>
