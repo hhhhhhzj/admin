@@ -10,13 +10,4 @@ const UserType = {
     role:Number,//1:管理员 2:普通用户
 }
 const UserModel = mongoose.model('user',new schema(UserType))
-//创建一个管理员账号
-UserModel.create({
-    username:'admin',
-    password:'<PASSWORD>',
-    gender:1,
-    introduction:'I am an admin',
-    avatar:'https://www.gravatar.com/avatar/0000000000?d=mp',
-    role:1
-})
 module.exports = UserModel;

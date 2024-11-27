@@ -19,7 +19,7 @@ const UserController = {
             const token = JWT.generate({
                 id: result[0].id,
                 username: result[0].username,
-            }, "10s")
+            }, "20s")
 
             res.header('Authorization', token)
             res.send({
@@ -38,16 +38,32 @@ const UserController = {
         const {username, introduction, gender} = req.body
         const token = req.headers['authorization'].split(' ')[1]
         console.log('token', token);
-        const avatar = `/avataruploads/${req.file.filename}`
+        
+        const avatar = req.file?`/avataruploads/${req.file.filename}`:''
         var payload = JWT.verify(token)
-        console.log('payload.id',payload.id);
+        console.log('payload.id:/n',payload.id);
         console.log(req.body, req.file);
         //调用service 模块更新 数据
         
         await UserServices.upload({_id:payload.id, username, introduction, gender:Number(gender), avatar })
-        res.send({
-            ActionType: 'ok',
-        })
+        if(avatar){
+            res.send({
+                ActionType: 'ok',
+                data: {
+                    username,introduction,
+                    gender:Number(gender),
+                    avatar
+                }
+            })
+        }else {
+            res.send({
+                ActionType: 'ok',
+                data: {
+                    username,introduction,
+                    gender:Number(gender),
+                }
+            })
+        }
     }
 }
 
