@@ -39,6 +39,8 @@
 <script setup>
 import Upload from '@/components/upload/Upload.vue';
 import { ref, reactive } from 'vue'
+import upload from '@/util/upload'
+import {useRouter} from 'vue-router';
 const userFormRef = ref()
 const userForm = reactive({
     username: '',
@@ -46,7 +48,8 @@ const userForm = reactive({
     role: 2,//1为管理员，2为编辑
     introduction: '',
     avatar: '',
-    file: null
+    file: null,
+    gender: 0,
 })
 
 const userFormRules = reactive({
@@ -75,19 +78,22 @@ const roleOptions = [{
     value: 2
 }]
 
-
 //每次选择完图片之后的回调
 const handleChange = (file) => {
     userForm.avatar = URL.createObjectURL(file);
-
+    
     userForm.file = file;
 }
 
+const router = useRouter()
 const submitForm = () => {
-    userFormRef.value.validate((valid) => {
+    userFormRef.value.validate(async(valid) => {
         if (valid) {
             //提交数据到后端
-            console.log('submitForm', userForm)
+            // console.log('submitForm', userForm)
+            await upload('/adminapi/user/add',userForm)
+
+            router.push(`/user-manage/userlist`)
         }
     })
 }

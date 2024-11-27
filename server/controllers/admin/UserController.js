@@ -35,35 +35,44 @@ const UserController = {
         }
     },
     upload: async (req, res) => {
-        const {username, introduction, gender} = req.body
+        const { username, introduction, gender } = req.body
         const token = req.headers['authorization'].split(' ')[1]
         console.log('token', token);
-        
-        const avatar = req.file?`/avataruploads/${req.file.filename}`:''
+
+        const avatar = req.file ? `/avataruploads/${req.file.filename}` : ''
         var payload = JWT.verify(token)
-        console.log('payload.id:/n',payload.id);
+        console.log('payload.id:/n', payload.id);
         console.log(req.body, req.file);
         //调用service 模块更新 数据
-        
-        await UserServices.upload({_id:payload.id, username, introduction, gender:Number(gender), avatar })
-        if(avatar){
+
+        await UserServices.upload({ _id: payload.id, username, introduction, gender: Number(gender), avatar })
+        if (avatar) {
             res.send({
                 ActionType: 'ok',
                 data: {
-                    username,introduction,
-                    gender:Number(gender),
+                    username, introduction,
+                    gender: Number(gender),
                     avatar
                 }
             })
-        }else {
+        } else {
             res.send({
                 ActionType: 'ok',
                 data: {
-                    username,introduction,
-                    gender:Number(gender),
+                    username, introduction,
+                    gender: Number(gender),
                 }
             })
         }
+    },
+    add: async (req, res) => {
+        const { username, introduction, gender, role, password } = req.body
+
+        const avatar = req.file ? `/avataruploads/${req.file.filename}` : ''
+        await UserServices.add({ username, introduction, gender: Number(gender), avatar, role:Number(role), password })
+        res.send({
+            ActionType: 'ok',
+        })
     }
 }
 

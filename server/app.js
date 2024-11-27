@@ -49,7 +49,7 @@ app.use((req, res, next) => {
       const newToken = JWT.generate({
         id: payload.id,
         username: payload.username,
-      },'10s')
+      },'60s')
       res.header('authorization',newToken)
       next()
     }else{
