@@ -15,11 +15,6 @@
                     <el-option v-for="item in roleOptions" :key="item.value" :label="item.label" :value="item.value" />
                 </el-select>
             </el-form-item>
-            <!-- <el-form-item label="性别" prop="gender">
-                <el-select v-model="userForm.gender" placeholder="Select" style="width: 100%">
-                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
-                </el-select>
-            </el-form-item> -->
             <el-form-item label="个人简介" prop="introduction">
                 <el-input type="textarea" v-model="userForm.introduction" />
             </el-form-item>

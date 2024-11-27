@@ -39,6 +39,10 @@ const UserServices = {
             role
         })
     },
+
+    getList: async () => {
+        return UserModel.find({},['username','role','avatar','introduction','gender'])
+    }
 }
 
 module.exports = UserServices
