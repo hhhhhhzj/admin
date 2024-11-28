@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@tsparticles/vue3": "^3.0.1",
+    "@wangeditor/editor": "^5.1.23",
     "axios": "^1.7.7",
     "core-js": "^3.8.3",
     "element-plus": "^2.8.8",
