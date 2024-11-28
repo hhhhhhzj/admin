@@ -38,7 +38,9 @@ import { ref, reactive } from 'vue'
 import Editor from '@/components/editor/Editor'
 import Upload from '@/components/upload/Upload'
 import upload from '@/util/upload'
+import { useRouter } from 'vue-router';
 
+const router = useRouter()
 const newsFormRef = ref()
 const newsForm = reactive({
     title: '',
@@ -79,9 +81,13 @@ const handleUploadChange = (file) => {
     newsForm.file = file;
 }
 const submitForm = () => {
-    newsFormRef.value.validate((valid) => {
+    newsFormRef.value.validate(async (valid) => {
         if (valid) {
             console.log('submitForm', newsForm);
+
+            //后台通信
+            await upload('/adminapi/news/add',newsForm)
+            router.push(`/news-manage/newslist`)
         }
     })
 }
