@@ -9,6 +9,9 @@ const upload = multer({dest: 'public/avataruploads/'});
 UserRouter.post('/adminapi/user/login',UserController.login)
 UserRouter.post('/adminapi/user/upload',upload.single('file'),UserController.upload)
 UserRouter.post('/adminapi/user/add',upload.single('file'),UserController.add)
+//实现用户列表的增删改查
 UserRouter.get('/adminapi/user/getList',UserController.getList)
+UserRouter.delete('/adminapi/user/List/:id',UserController.delList)
+
 
 module.exports = UserRouter;

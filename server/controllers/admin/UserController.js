@@ -80,6 +80,12 @@ const UserController = {
             ActionType: 'ok',
             data: result
         })
+    },
+    delList: async (req, res) => {
+        const result = await UserServices.delList({_id:req.params.id})
+        res.send({
+            ActionType: 'ok',
+        })
     }
 }
 

@@ -29,9 +29,16 @@
                         <el-button size="small" @click="handleEdit(scope.row)">
                             编辑
                         </el-button>
-                        <el-button size="small" type="danger" @click="handleDelete(scope.row)">
-                            删除
-                        </el-button>
+                        <el-popconfirm title="你确定要删除吗?"
+                        confirmButtonText="确定" cancelButtonText="取消"
+                        @confirm="handleDelete(scope.row)">
+                            <template #reference>
+                                <el-button size="small" type="danger">
+                                    删除
+                                </el-button>
+
+                            </template>
+                        </el-popconfirm>
                     </template>
                 </el-table-column>
 
@@ -61,7 +68,15 @@ const handleEdit = (data) => {
     console.log(data)
 }
 
-const handleDelete = (data) => {
-    console.log(data)
+const handleDelete = async(data) => {
+    // console.log(data)
+    await axios.delete(`/adminapi/user/list/${data._id}`)
+    getTableData()
 }
 </script>
+
+<style lang="scss" scoped>
+.el-table {
+    margin-top: 50px;
+}
+</style>
