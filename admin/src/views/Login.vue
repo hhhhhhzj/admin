@@ -1,43 +1,19 @@
 <template>
     <div>
-        <vue-particles 
-            id="tsparticles" 
-            :options="options" />
+        <vue-particles id="tsparticles" :options="options" />
         <div class="formContainer">
             <h3>企业门户网站管理系统</h3>
-            <el-form 
-                ref="loginFormRef" 
-                :model="loginForm" 
-                status-icon 
-                :rules="loginRules"
-                label-width="auto" 
-                class="loginform"
-                >
-                <el-form-item 
-                    label="用户名" 
-                    prop="username"
-                >
-                    <el-input 
-                        v-model="loginForm.username" 
-                        autocomplete="off" 
-                    />
+            <el-form ref="loginFormRef" :model="loginForm" status-icon :rules="loginRules" label-width="auto"
+                class="loginform">
+                <el-form-item label="用户名" prop="username">
+                    <el-input v-model="loginForm.username" autocomplete="off" />
                 </el-form-item>
-                <el-form-item 
-                    label="密码" 
-                    prop="password"
-                >
-                    <el-input 
-                        v-model="loginForm.password" 
-                        type="password" 
-                        autocomplete="off" 
-                    />
+                <el-form-item label="密码" prop="password">
+                    <el-input v-model="loginForm.password" type="password" autocomplete="off" />
                 </el-form-item>
-                
+
                 <el-form-item>
-                    <el-button 
-                        type="primary" 
-                        @click="submitForm(ruleFormRef)"
-                    >
+                    <el-button type="primary" @click="submitForm(ruleFormRef)">
                         登陆
                     </el-button>
                 </el-form-item>
@@ -50,8 +26,8 @@
 import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
-import {ElMessage} from 'element-plus';
-import {useStore} from 'vuex'
+import { ElMessage } from 'element-plus';
+import { useStore } from 'vuex'
 const store = useStore()
 const loginForm = reactive({
     username: '',
@@ -82,13 +58,15 @@ const submitForm = () => {
             console.log(loginForm);
             //3.设置token
             // localStorage.setItem('token', 'xxxxxx'); //设置token
-            axios.post("/adminapi/user/login",loginForm).then(res =>{
+            axios.post("/adminapi/user/login", loginForm).then(res => {
                 console.log(res.data);
-                if(res.data.ActionType==='ok'){
+                if (res.data.ActionType === 'ok') {
                     // console.log(res.data.data);
-                    store.commit('changeUserInfo',res.data.data)
+                    store.commit('changeUserInfo', res.data.data)
+                    store.commit('changeGetterRouter', false)
+
                     router.push('/index');
-                }else{
+                } else {
                     ElMessage.error('用户名或密码错误')
                 }
             })

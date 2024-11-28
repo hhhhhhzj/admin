@@ -10,7 +10,7 @@ const routes = [
   },
   {
     path: '/mainbox',
-    name:'mainbox',
+    name: 'mainbox',
     component: () => import('@/views/MainBox.vue'),
   },
   {
@@ -35,6 +35,8 @@ router.beforeEach((to, from, next) => {
       next({ name: 'login' })
     } else {
       if (!store.state.isGetterRouter) {
+        //删除mainbox
+        router.removeRoute('mainbox')
         ConfigRouter()
         next({
           path: to.fullPath
@@ -47,12 +49,28 @@ router.beforeEach((to, from, next) => {
 })
 
 const ConfigRouter = () => {
-   RoutesConfig.forEach(item => {
-    router.addRoute('mainbox', item)
-   })
 
-   //改变isGetterRouter的状态
-   store.commit('changeGetterRouter', true)
+  if(!router.hasRoute('mainbox')){
+    router.addRoute('mainbox', {
+      path: '/mainbox',
+      name: 'mainbox',
+      component: () => import('@/views/MainBox.vue'),
+    })
+  }
+
+  RoutesConfig.forEach(item => {
+    checkPermission(item) && router.addRoute('mainbox', item)
+  })
+
+  //改变isGetterRouter的状态
+  store.commit('changeGetterRouter', true)
+}
+
+const checkPermission = (item) => {
+  if(item.requireAdmin){
+    return store.state.userInfo.role===1
+  }
+  return true
 }
 
 export default router

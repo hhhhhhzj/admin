@@ -15,7 +15,7 @@
                 <el-icon><Avatar /></el-icon>
                 <span>个人中心</span>
             </el-menu-item>
-            <el-sub-menu index="/user-manage">
+            <el-sub-menu index="/user-manage" v-admin>
                 <template #title>
                     <el-icon>
                         <user-filled />
@@ -25,7 +25,7 @@
                     <el-menu-item index="/user-manage/adduser">添加用户</el-menu-item>
                     <el-menu-item index="/user-manage/userlist">用户列表</el-menu-item>
             </el-sub-menu>
-            <el-sub-menu index="/news-manage">
+            <el-sub-menu index="/news-manage" v-admin>
                 <template #title>
                     <el-icon>
                         <message-box />
@@ -35,7 +35,7 @@
                     <el-menu-item index="/news-manage/addnews">添加新闻</el-menu-item>
                     <el-menu-item index="/news-manage/newslist">新闻列表</el-menu-item>
             </el-sub-menu>
-            <el-sub-menu index="/product-manage">
+            <el-sub-menu index="/product-manage" v-admin>
                 <template #title>
                     <el-icon>
                         <reading />
@@ -52,8 +52,17 @@
 <script setup>
 import {HomeFilled,Avatar,UserFilled,MessageBox,Reading,Pointer} from '@element-plus/icons-vue'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 const route = useRouter()
-
+const store = useStore()
+const vAdmin = {
+    mounted(el){
+        console.log(el);
+        if(store.state.userInfo.role!==1){
+            el.parentNode.removeChild(el)
+        }
+    }
+}
 
 
 </script>
