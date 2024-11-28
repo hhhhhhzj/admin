@@ -29,9 +29,8 @@
                         <el-button size="small" @click="handleEdit(scope.row)">
                             编辑
                         </el-button>
-                        <el-popconfirm title="你确定要删除吗?"
-                        confirmButtonText="确定" cancelButtonText="取消"
-                        @confirm="handleDelete(scope.row)">
+                        <el-popconfirm title="你确定要删除吗?" confirmButtonText="确定" cancelButtonText="取消"
+                            @confirm="handleDelete(scope.row)">
                             <template #reference>
                                 <el-button size="small" type="danger">
                                     删除
@@ -44,34 +43,115 @@
 
             </el-table>
         </el-card>
+
+        <el-dialog v-model="dialogVisible" title="编辑用户" width="500">
+            <template #footer>
+
+                <el-form ref="userFormRef" style="max-width: 600px" :model="userForm" :rules="userFormRules"
+                    label-width="80px" class="demo-ruleForm" status-icon>
+                    <el-form-item label="用户名" prop="username">
+                        <el-input v-model="userForm.username" />
+                    </el-form-item>
+                    <el-form-item label="密码" prop="password">
+                        <el-input type="password" v-model="userForm.password" />
+                    </el-form-item>
+                    <el-form-item label="角色" prop="role">
+                        <el-select v-model="userForm.role" placeholder="Select" style="width: 100%">
+                            <el-option v-for="item in roleOptions" :key="item.value" :label="item.label"
+                                :value="item.value" />
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="个人简介" prop="introduction">
+                        <el-input type="textarea" v-model="userForm.introduction" />
+                    </el-form-item>
+
+                </el-form>
+
+                <div class="dialog-footer">
+                    <el-button @click="dialogVisible = false">取消</el-button>
+                    <el-button type="primary" @click="handleEditConfirm()">
+                        确定
+                    </el-button>
+                </div>
+            </template>
+        </el-dialog>
+
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted,reactive } from 'vue';
 import axios from 'axios';
 
 const tableData = ref([])
+const dialogVisible = ref(false)
+let userForm = reactive({
+    username: '',
+    password: '',
+    role: 2,//1为管理员，2为编辑
+    introduction: '',
+})
+const userFormRef = ref()
+const userFormRules = reactive({
+    username: [
+        { required: true, message: '请输入名字', trigger: 'blur' },
+    ],
+    password: [
+        { required: true, message: '请选择密码', trigger: 'blur' },
+    ],
+    introduction: [
+        { required: true, message: '请输入简介', trigger: 'blur' },
+    ],
+    role: [
+        { required: true, message: '请选择权限', trigger: 'blur' },
+    ],
+})
+
+const roleOptions = [{
+    label: '管理员',
+    value: 1
+}, {
+    label: '编辑',
+    value: 2
+}]
 
 onMounted(() => {
     getTableData()
 })
 
+
 const getTableData = async () => {
-    const res = await axios.get('/adminapi/user/getList')
+    const res = await axios.get('/adminapi/user/list')
     // console.log(res.data);
     tableData.value = res.data.data
 
 }
-
-const handleEdit = (data) => {
-    console.log(data)
+//编辑回调
+const handleEdit = async(data) => {
+    // console.log(data)
+    const res = await axios.get(`/adminapi/user/list/${data._id}`)
+    Object.assign(userForm, res.data.data[0])
+    
+    dialogVisible.value = true
 }
 
-const handleDelete = async(data) => {
+const handleDelete = async (data) => {
     // console.log(data)
     await axios.delete(`/adminapi/user/list/${data._id}`)
     getTableData()
+}
+//编辑确认回调
+const handleEditConfirm = () => {
+    userFormRef.value.validate(async(valid) => {
+        if (valid) {
+            //更新后端
+            await axios.put(`/adminapi/user/list/${userForm._id}`, userForm)
+            //dialog隐藏
+            dialogVisible.value = false
+            //获取table数据
+            getTableData()
+        }
+    })
 }
 </script>
 

@@ -40,13 +40,17 @@ const UserServices = {
         })
     },
 
-    getList: async () => {
-        return UserModel.find({},['username','role','avatar','introduction','gender'])
+    getList: async ({id}) => {
+        return id?UserModel.find({_id:id},['username','role','introduction','password']):UserModel.find({},['username','role','avatar','introduction','gender'])
     },
 
     delList: async ({_id}) => {
         return UserModel.deleteOne({_id})
-    }
+    },
+
+    putList: async (body)=>{
+        return UserModel.updateOne({_id:body._id},body)
+    },
 }
 
 module.exports = UserServices
