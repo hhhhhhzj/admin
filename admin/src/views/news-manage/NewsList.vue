@@ -20,7 +20,7 @@
 
                 <el-table-column label="是否发布" width="180">
                     <template #default="scope">
-                        <el-switch v-model="scope.row.isPublish" :active-value='1' :inactive-value='0' />
+                        <el-switch v-model="scope.row.isPublish" :active-value='1' :inactive-value='0' @change="handleSwitchChange(scope.row)"/>
                     </template>
                 </el-table-column>
 
@@ -64,7 +64,15 @@ const categoryFormat = (category) => {
     const arr = ['最新分类', '典型案例', '通知公告']
     return arr[category]
 }
-
+//开关回调
+const handleSwitchChange = async (item) => {
+    // console.log(item);
+    await axios.put(`/adminapi/news/publish`, {
+        _id:item._id,
+        isPublish:item.isPublish
+    })
+    await getTableData()
+}
 </script>
 
 <style scoped>

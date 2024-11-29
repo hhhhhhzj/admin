@@ -9,5 +9,6 @@ var NewsRouter = express.Router();
 //涉及文件上传，需要加上multer
 NewsRouter.post('/adminapi/news/add', upload.single('file'), NewsController.add)
 NewsRouter.get('/adminapi/news/list', NewsController.getList)
+NewsRouter.put('/adminapi/news/publish', NewsController.publish)
 
 module.exports = NewsRouter;

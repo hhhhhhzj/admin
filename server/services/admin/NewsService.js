@@ -14,6 +14,15 @@ const NewsService = {
 
     getList: async () => {
         return NewsModel.find({})
+    },
+
+    publish: async ({_id,isPublish,editTime})=> {
+         return NewsModel.updateOne({
+            _id
+         },{
+            isPublish,
+            editTime
+         })
     }
 }
 
