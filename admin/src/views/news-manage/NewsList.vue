@@ -1,4 +1,4 @@
-<template>  
+<template>
     <div>
         <el-card>
             <el-page-header content="新闻列表" icon="" title="新闻管理" />
@@ -14,32 +14,45 @@
 
                 <el-table-column label="更新时间" width="180">
                     <template #default="scope">
-                        {{ formatTime.getTime() }}
+                        {{ formatTime.getTime(scope.row.editTime) }}
                     </template>
                 </el-table-column>
 
                 <el-table-column label="是否发布" width="180">
                     <template #default="scope">
-                        <el-switch v-model="scope.row.isPublish" :active-value='1' :inactive-value='0' @change="handleSwitchChange(scope.row)"/>
+                        <el-switch v-model="scope.row.isPublish" :active-value='1' :inactive-value='0'
+                            @change="handleSwitchChange(scope.row)" />
                     </template>
                 </el-table-column>
 
                 <el-table-column label="操作">
                     <template #default="scope">
-                        <el-button circle :icon='Star' type="success"  >
+                        <el-button circle :icon='Star' type="success" @click="handlePreview(scope.row)">
                         </el-button>
                         <el-button circle :icon='Edit'>
                         </el-button>
-                        <el-button circle :icon='Delete' type="danger"  >
+                        <el-button circle :icon='Delete' type="danger">
                         </el-button>
                     </template>
                 </el-table-column>
 
             </el-table>
 
-            
+
 
         </el-card>
+
+        <el-dialog v-model="dialogVisible" title="预览新闻" width="500">
+            <div>
+                <h2>{{ previewData.title }}</h2>
+                <div style="font-size: 12px;color: gray;">{{ formatTime.getTime(previewData.editTime) }}</div>
+                <el-divider>
+                    <el-icon><star-filled /></el-icon>
+                </el-divider>
+                <div v-html="previewData.content"></div>
+            </div>
+        </el-dialog>
+
     </div>
 </template>
 
@@ -47,14 +60,16 @@
 import { ref, onMounted } from 'vue'
 import axios from 'axios';
 import formatTime from '@/util/formatTime'
-import {Star,Edit,Delete} from '@element-plus/icons-vue'
+import { Star, Edit, Delete, StarFilled } from '@element-plus/icons-vue'
 
 const tableData = ref([])
+const previewData = ref({})
+const dialogVisible = ref(false)
 
 onMounted(() => {
     getTableData()
 })
-const getTableData = async() => {
+const getTableData = async () => {
     const res = await axios.get(`/adminapi/news/list`)
     // console.log(res.data.data);
     tableData.value = res.data.data
@@ -68,15 +83,28 @@ const categoryFormat = (category) => {
 const handleSwitchChange = async (item) => {
     // console.log(item);
     await axios.put(`/adminapi/news/publish`, {
-        _id:item._id,
-        isPublish:item.isPublish
+        _id: item._id,
+        isPublish: item.isPublish
     })
     await getTableData()
 }
+//预览回调
+const handlePreview = (data) => {
+    // console.log(data);
+    previewData.value = data
+    dialogVisible.value = true
+}
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .el-table {
     margin-top: 50px;
 }
+
+::v-deep .el-dialog__body{
+    img{
+        max-width: 100%;
+    }
+} 
+
 </style>
