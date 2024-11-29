@@ -12,8 +12,29 @@ const NewsService = {
         })
     },
 
-    getList: async () => {
-        return NewsModel.find({})
+    updateList: async ({ _id, title, content, category, cover, isPublish, editTime})=>{
+        if(cover){
+            return NewsModel.updateOne({_id},{
+                title,
+                content,
+                category,
+                cover,
+                isPublish,
+                editTime
+            })
+        }else{
+            return NewsModel.updateOne({_id},{
+                title,
+                content,
+                category,
+                isPublish,
+                editTime
+            })
+        }
+    },
+
+    getList: async ({_id}) => {
+        return _id? NewsModel.find({_id}) : NewsModel.find({})
     },
 
     publish: async ({ _id, isPublish, editTime }) => {

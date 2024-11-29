@@ -41,6 +41,10 @@ const routes = [
         path: '/:pathMatch(.*)*',
         name: 'Notfound',
         component: () => import('@/views/notfound/NotFound.vue')
+    },
+    {
+        path: '/news-manage/editnews/:id',
+        component: () => import('@/views/news-manage/NewsEdit.vue')
     }
 ]
 

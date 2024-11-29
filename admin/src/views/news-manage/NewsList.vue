@@ -29,7 +29,7 @@
                     <template #default="scope">
                         <el-button circle :icon='Star' type="success" @click="handlePreview(scope.row)">
                         </el-button>
-                        <el-button circle :icon='Edit'>
+                        <el-button circle :icon='Edit' @click="handleEdit(scope.row)">
                         </el-button>
 
                         <el-popconfirm 
@@ -71,7 +71,9 @@ import { ref, onMounted } from 'vue'
 import axios from 'axios';
 import formatTime from '@/util/formatTime'
 import { Star, Edit, Delete, StarFilled } from '@element-plus/icons-vue'
+import { useRouter } from 'vue-router';
 
+const router = useRouter()
 const tableData = ref([])
 const previewData = ref({})
 const dialogVisible = ref(false)
@@ -109,6 +111,12 @@ const handleDelete = async (item) => {
     // console.log(item);
     await axios.delete(`/adminapi/news/list/${item._id}`)
     await getTableData()
+}
+//编辑回调
+const handleEdit = (item) => {
+    //跳转到/news-manage/editnews/:id
+
+    router.push(`/news-manage/editnews/${item._id}`)
 }
 </script>
 
