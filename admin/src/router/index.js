@@ -13,10 +13,6 @@ const routes = [
     name: 'mainbox',
     component: () => import('@/views/MainBox.vue'),
   },
-  {
-    path: '/',
-    redirect: '/login'
-  }
   //mianbox的嵌套路由，后面根据权限动态添加
 ]
 

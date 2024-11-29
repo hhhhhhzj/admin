@@ -88,8 +88,8 @@ const getTableData = async () => {
 }
 //格式化分类
 const categoryFormat = (category) => {
-    const arr = ['最新分类', '典型案例', '通知公告']
-    return arr[category]
+    const arr = ['最新动态', '典型案例', '通知公告']
+    return arr[category-1]
 }
 //开关回调
 const handleSwitchChange = async (item) => {
