@@ -31,8 +31,18 @@
                         </el-button>
                         <el-button circle :icon='Edit'>
                         </el-button>
-                        <el-button circle :icon='Delete' type="danger">
-                        </el-button>
+
+                        <el-popconfirm 
+                        title="你确定要删除吗?" 
+                        confirmButtonText="确定" 
+                        cancelButtonText="取消"
+                        @confirm="handleDelete(scope.row)">
+                            <template #reference>
+                                <el-button circle :icon='Delete' type="danger">
+                                </el-button>
+                            </template>
+                        </el-popconfirm>
+
                     </template>
                 </el-table-column>
 
@@ -94,6 +104,12 @@ const handlePreview = (data) => {
     previewData.value = data
     dialogVisible.value = true
 }
+//删除回调
+const handleDelete = async (item) => {
+    // console.log(item);
+    await axios.delete(`/adminapi/news/list/${item._id}`)
+    await getTableData()
+}
 </script>
 
 <style lang="scss" scoped>
@@ -101,10 +117,9 @@ const handlePreview = (data) => {
     margin-top: 50px;
 }
 
-::v-deep .el-dialog__body{
-    img{
+::v-deep .el-dialog__body {
+    img {
         max-width: 100%;
     }
-} 
-
+}
 </style>

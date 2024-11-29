@@ -10,5 +10,6 @@ var NewsRouter = express.Router();
 NewsRouter.post('/adminapi/news/add', upload.single('file'), NewsController.add)
 NewsRouter.get('/adminapi/news/list', NewsController.getList)
 NewsRouter.put('/adminapi/news/publish', NewsController.publish)
+NewsRouter.delete('/adminapi/news/list/:id', NewsController.delList)
 
 module.exports = NewsRouter;

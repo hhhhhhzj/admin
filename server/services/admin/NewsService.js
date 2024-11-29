@@ -16,13 +16,19 @@ const NewsService = {
         return NewsModel.find({})
     },
 
-    publish: async ({_id,isPublish,editTime})=> {
-         return NewsModel.updateOne({
+    publish: async ({ _id, isPublish, editTime }) => {
+        return NewsModel.updateOne({
             _id
-         },{
+        }, {
             isPublish,
             editTime
-         })
+        })
+    },
+
+    delList: async ({ _id }) => {
+        return NewsModel.deleteOne({
+            _id
+        })
     }
 }
 

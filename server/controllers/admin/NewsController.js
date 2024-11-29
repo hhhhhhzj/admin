@@ -1,4 +1,5 @@
 const NewsService = require('../../services/admin/NewsService')
+const { delList } = require('./UserController')
 
 const NewsController = {
     add: async (req, res) => {
@@ -30,6 +31,13 @@ const NewsController = {
             ...req.body,
             editTime:new Date()
         })
+        res.send({
+            ActionType: 'ok'
+        })
+    },
+
+    delList: async (req, res) => {
+        await NewsService.delList({_id:req.params.id})
         res.send({
             ActionType: 'ok'
         })
