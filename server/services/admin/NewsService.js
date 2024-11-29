@@ -11,6 +11,10 @@ const NewsService = {
             editTime,
         })
     },
+
+    getList: async () => {
+        return NewsModel.find({})
+    }
 }
 
 module.exports = NewsService    

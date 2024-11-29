@@ -16,6 +16,14 @@ const NewsController = {
             ActionType: 'ok'
         })
     },
+
+    getList: async (req, res) => {
+        const result = await NewsService.getList()
+        res.send({
+            ActionType: 'ok',
+            data: result
+        })
+    }
 }
 
 module.exports = NewsController
