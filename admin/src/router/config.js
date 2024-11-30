@@ -43,6 +43,10 @@ const routes = [
         component: () => import('@/views/notfound/NotFound.vue')
     },
     {
+        path: '/product-manage/editproduct/:id',
+        component: () => import('@/views/product-manage/ProductEdit.vue')
+    },
+    {
         path: '/news-manage/editnews/:id',
         component: () => import('@/views/news-manage/NewsEdit.vue')
     }

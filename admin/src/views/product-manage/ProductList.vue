@@ -41,17 +41,6 @@
 
         </el-card>
 
-        <el-dialog v-model="dialogVisible" title="预览新闻" width="500">
-            <div>
-                <h2>{{ previewData.title }}</h2>
-                <div style="font-size: 12px;color: gray;">{{ formatTime.getTime(previewData.editTime) }}</div>
-                <el-divider>
-                    <el-icon><star-filled /></el-icon>
-                </el-divider>
-                <div v-html="previewData.content"></div>
-            </div>
-        </el-dialog>
-
     </div>
 </template>
 
@@ -83,7 +72,7 @@ const handleDelete = async (item) => {
 const handleEdit = (item) => {
     //跳转到/news-manage/editnews/:id
 
-    router.push(`/news-manage/editnews/${item._id}`)
+    router.push(`/product-manage/editproduct/${item._id}`)
 }
 </script>
 

@@ -102,7 +102,7 @@ const handleBack = () => {
 onMounted(async() => {
     // console.log(route.params.id);
     const res = await axios.get(`/adminapi/news/list/${route.params.id}`)
-    // console.log(res.data.data[0]);
+    console.log(res.data.data[0]);
     Object.assign(newsForm, res.data.data[0])
     
 })

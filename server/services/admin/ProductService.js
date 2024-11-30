@@ -11,26 +11,24 @@ const ProductService = {
         })
     },
 
-    // updateList: async ({ _id, title, content, category, cover, isPublish, editTime})=>{
-    //     if(cover){
-    //         return NewsModel.updateOne({_id},{
-    //             title,
-    //             content,
-    //             category,
-    //             cover,
-    //             isPublish,
-    //             editTime
-    //         })
-    //     }else{
-    //         return NewsModel.updateOne({_id},{
-    //             title,
-    //             content,
-    //             category,
-    //             isPublish,
-    //             editTime
-    //         })
-    //     }
-    // },
+    updateList: async ({ _id, title, introduction, detail, cover, editTime }) => {
+        if(cover){
+            return ProductModel.updateOne({_id},{
+                title,
+                introduction,
+                detail,
+                cover,
+                editTime
+            })
+        }else{
+            return ProductModel.updateOne({_id},{
+                title,
+                introduction,
+                detail,
+                editTime    
+            })
+        }
+    },
 
     getList: async ({_id}) => {
         return _id? ProductModel.find({_id}) : ProductModel.find({})

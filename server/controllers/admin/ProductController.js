@@ -4,7 +4,7 @@ const { delList } = require('./UserController')
 const ProductController = {
     add: async (req, res) => {
         // console.log(req.file,req.body);
-        const cover = req.file ? `/newsuploads/${req.file.filename}` : ''
+        const cover = req.file ? `/productuploads/${req.file.filename}` : ''
         const { title, introduction, detail } = req.body
         await ProductService.add({
             title,
@@ -18,22 +18,22 @@ const ProductController = {
         })
     },
 
-    // updateList: async (req, res) => {
-    //     // console.log(req.file,req.body);
-    //     const cover = req.file ? `/newsuploads/${req.file.filename}` : ''
-    //     const { title, content, category, isPublish, _id } = req.body
-    //     await NewsService.updateList({
-    //         _id,
-    //         title, content,
-    //         category: Number(category),
-    //         cover,
-    //         isPublish: Number(isPublish),
-    //         editTime: new Date()
-    //     })
-    //     res.send({
-    //         ActionType: 'ok'
-    //     })
-    // },
+    updateList: async (req, res) => {
+        // console.log(req.file,req.body);
+        const cover = req.file ? `/productuploads/${req.file.filename}` : ''
+        const { title, introduction, detail, _id } = req.body
+        await ProductService.updateList({
+            _id,
+            title,
+            introduction,
+            detail,
+            cover,
+            editTime: new Date()
+        })
+        res.send({
+            ActionType: 'ok'
+        })
+    },
 
     getList: async (req, res) => {
         const result = await ProductService.getList({ _id: req.params.id })
