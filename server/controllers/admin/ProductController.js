@@ -35,13 +35,13 @@ const ProductController = {
     //     })
     // },
 
-    // getList: async (req, res) => {
-    //     const result = await NewsService.getList({ _id: req.params.id })
-    //     res.send({
-    //         ActionType: 'ok',
-    //         data: result
-    //     })
-    // },
+    getList: async (req, res) => {
+        const result = await ProductService.getList({ _id: req.params.id })
+        res.send({
+            ActionType: 'ok',
+            data: result
+        })
+    },
 
     // publish: async (req, res) => {
     //     await NewsService.publish({
@@ -51,14 +51,14 @@ const ProductController = {
     //     res.send({
     //         ActionType: 'ok'
     //     })
-    // },
+    // }, 
 
-    // delList: async (req, res) => {
-    //     await NewsService.delList({ _id: req.params.id })
-    //     res.send({
-    //         ActionType: 'ok'
-    //     })
-    // }
+    delList: async (req, res) => {
+        await ProductService.delList({ _id: req.params.id })
+        res.send({
+            ActionType: 'ok'
+        })
+    }
 }
 
 module.exports = ProductController

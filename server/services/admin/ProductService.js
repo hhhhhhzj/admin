@@ -32,9 +32,9 @@ const ProductService = {
     //     }
     // },
 
-    // getList: async ({_id}) => {
-    //     return _id? NewsModel.find({_id}) : NewsModel.find({})
-    // },
+    getList: async ({_id}) => {
+        return _id? ProductModel.find({_id}) : ProductModel.find({})
+    },
 
     // publish: async ({ _id, isPublish, editTime }) => {
     //     return NewsModel.updateOne({
@@ -45,11 +45,11 @@ const ProductService = {
     //     })
     // },
 
-    // delList: async ({ _id }) => {
-    //     return NewsModel.deleteOne({
-    //         _id
-    //     })
-    // }
+    delList: async ({ _id }) => {
+        return ProductModel.deleteOne({
+            _id
+        })
+    }
 }
 
 module.exports = ProductService    
