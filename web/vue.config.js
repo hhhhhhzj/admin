@@ -10,5 +10,15 @@ module.exports = defineConfig({
         __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: 'false' // 或者 'true'，取决于你的需要
       })
     ]
-  }
+  },
+
+    //反向代理
+    devServer: {
+      proxy: {
+        "/webapi": {
+          target: "http://localhost:3000",
+          changeOrigin: true,
+        },
+      },
+    },
 })
